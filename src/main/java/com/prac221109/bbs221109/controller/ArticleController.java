@@ -1,6 +1,6 @@
 package com.prac221109.bbs221109.controller;
 
-import com.prac221109.bbs221109.domain.dto.AritcleDto;
+import com.prac221109.bbs221109.domain.dto.ArticleDto;
 import com.prac221109.bbs221109.domain.entity.Article;
 import com.prac221109.bbs221109.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -59,18 +59,19 @@ public class ArticleController {
             return "articles/error";
         }
     }
+
     @PostMapping("/{id}/update")
-    public String update(@PathVariable Long id, AritcleDto aritcleDto, Model model){
-        log.info("title:{}  content:{}",aritcleDto.getTitle(),aritcleDto.getContent());
-        Article article = articleRepository.save(aritcleDto.toEntity());
+    public String update(@PathVariable Long id, ArticleDto articleDto, Model model){
+        log.info("title:{}  content:{}",articleDto.getTitle(),articleDto.getContent());
+        Article article = articleRepository.save(articleDto.toEntity());
         model.addAttribute("article", article);
         return String.format("redirect:/articles/%d", article.getId());
     }
 
     @PostMapping("/posts")
-    public String add(AritcleDto aritcleDto){
-        log.info("title = "+aritcleDto.getTitle() + "    content = "+aritcleDto.getContent());
-        Article saveArticle = articleRepository.save(aritcleDto.toEntity());
+    public String add(ArticleDto articleDto){
+        log.info("title = "+articleDto.getTitle() + "    content = "+articleDto.getContent());
+        Article saveArticle = articleRepository.save(articleDto.toEntity());
         return String.format("redirect:/articles/%d", saveArticle.getId());
     }
 
