@@ -45,6 +45,12 @@ public class ArticleController {
         return "articles/new";
     }
 
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id){
+        articleRepository.deleteById(id);
+        return "redirect:/articles";
+    }
+
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model){
         Optional<Article> optionalArticle = articleRepository.findById(id);
@@ -59,13 +65,15 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model){
+        //findById는 Optional형태로 반환되기때문에 Optional을로 받는다.
+        //Optional은 null처리를 하기 편하다. get, isEmpty, isPresent등이 포함되어있다.
         Optional<Article> optionalArticle = articleRepository.findById(id);
         if(!optionalArticle.isEmpty()){
             System.out.println(optionalArticle.get());
             model.addAttribute("article", optionalArticle.get());
-            return "articles/show";
+            return "articles/show"; //id값이 있으면 show화면
         } else {
-            return "articles/error";
+            return "articles/error"; //id값이 없으면 error화면
         }
     }
 
@@ -83,5 +91,4 @@ public class ArticleController {
         Article saveArticle = articleRepository.save(articleDto.toEntity());
         return String.format("redirect:/articles/%d", saveArticle.getId());
     }
-
 }
