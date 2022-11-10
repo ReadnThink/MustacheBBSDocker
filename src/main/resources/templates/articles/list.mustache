@@ -1,0 +1,22 @@
+{{>layouts/header}}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">title</th>
+        <th scope="col">content</th>
+    </tr>
+    </thead>
+    <tbody>
+{{#articles}}
+    <tr>
+        <th scope="row">{{id}}</th>
+        <td><a href="/articles/{{id}}"> {{title}}</a></td>
+        <td>{{content}}</td>
+    </tr>
+{{/articles}}
+    </tbody>
+</table>
+<a href="/articles/new">게시글 작성</a>
+<a href="/articles">목록</a>
+{{>layouts/footer}}
