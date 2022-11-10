@@ -28,6 +28,14 @@ public class ArticleController {
     @GetMapping("")
     public String list(Model model){
         List<Article> articles = articleRepository.findAll();
+        //에러 확인
+        for (Article article : articles) {
+            System.out.println(
+                    "id = " + article.getId() +
+                            "     title = "+ article.getTitle() +
+                            "     content = "+ article.getContent());
+        }
+
         model.addAttribute("articles", articles);
         return "articles/list";
     }
@@ -53,6 +61,7 @@ public class ArticleController {
     public String findById(@PathVariable Long id, Model model){
         Optional<Article> optionalArticle = articleRepository.findById(id);
         if(!optionalArticle.isEmpty()){
+            System.out.println(optionalArticle.get());
             model.addAttribute("article", optionalArticle.get());
             return "articles/show";
         } else {
